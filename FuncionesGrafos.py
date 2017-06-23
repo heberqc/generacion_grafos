@@ -45,10 +45,35 @@ def configuration_model(Sg):
 		N.append(i + 1)
 		for j in range(Sg[i]):
 			Stubs.append(N[i])
-	while (len(Stubs) > 0):
+	while len(Stubs) > 0:
 		a = Stubs.pop(int(m.floor(r.random() * len(Stubs))))
-		b = Stubs.pop(int(m.floor(r.random() * len(Stubs))))
+		while True:
+			aux = int(m.floor(r.random() * len(Stubs)))
+			if a != Stubs[aux]:
+				break
+		b = Stubs.pop(aux)
 		E.append((a, b))
+	return N, E
+
+def edgetriangle_model(Ss, St):
+	N, E, s_stubs, t_stubs = [], [], [], []
+	for i in range(len(Ss)):
+		N.append(i + 1)
+		for j in range(Ss[i]):
+			s_stubs.append(N[i])
+		for j in range(St[i]):
+			t_stubs.append(N[i])
+	while len(s_stubs) > 0:
+		a = s_stubs.pop(int(m.floor(r.random() * len(s_stubs))))
+		b = s_stubs.pop(int(m.floor(r.random() * len(s_stubs))))
+		E.append((a, b))
+	while len(t_stubs) > 0:
+		a = t_stubs.pop(int(m.floor(r.random() * len(t_stubs))))
+		b = t_stubs.pop(int(m.floor(r.random() * len(t_stubs))))
+		c = t_stubs.pop(int(m.floor(r.random() * len(t_stubs))))
+		E.append((a, b))
+		E.append((a, c))
+		E.append((b, c))
 	return N, E
 
 def mostrar_datos(G):
@@ -60,4 +85,3 @@ def mostrar_datos(G):
 		nTriangles = nTriangles + valor
 	nTriangles = int(nTriangles / 3)
 	print("Cantidad de triangulos:", nTriangles)
-	return

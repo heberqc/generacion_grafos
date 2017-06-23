@@ -11,11 +11,14 @@ from FuncionesGrafos import mostrar_datos
 # secuencia de grados
 Sg1 = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5
 	, 5, 5, 5, 5, 5, 5, 5, 5]
+# Sg1 = [3, 3, 3, 3, 2]
 if havel_hakimi(Sg1):
 	N1, E1 = configuration_model(Sg1)
 	G = nx.Graph()
 	G.add_nodes_from(N1)
 	G.add_edges_from(E1)
+	print(E1)
+	print(nx.triangles(G).values())
 	mostrar_datos(G)
 	nx.draw_networkx(G)
 	plt.show()
