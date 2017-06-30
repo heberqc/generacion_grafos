@@ -37,9 +37,9 @@ for i in range(len(Sg1)):
 		Ss1.append(v)
 	else:
 		Ss1.append(0)
-print(Sg1)
-print(St1)
-print(Ss1)
+print("Sg:", Sg1)
+print("St:", St1)
+print("Ss:", Ss1)
 N2, E2 = edgetriangle_model(Ss1, St1)
 G2 = nx.Graph()
 G2.add_edges_from(E2)

@@ -79,6 +79,7 @@ def edgetriangle_model(Ss, St):
 def mostrar_datos(G):
 	print("Cantidad de nodos:", nx.number_of_nodes(G))
 	print("Cantidad de enlaces:", nx.number_of_edges(G))
+	print("Coef. agrupamiento global - Transitividad:", nx.transitivity(G))
 	print("Coef. agrupamiento promedio:", round(nx.average_clustering(G), 4))
 	nTriangles = 0
 	for valor in nx.triangles(G).values():
