@@ -2,6 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import math as m
 import random as r
+import subprocess
 from datetime import datetime
 
 def havel_hakimi(secuencia):
@@ -75,6 +76,56 @@ def edgetriangle_model(Ss, St):
 		E.append((a, b))
 		E.append((a, c))
 		E.append((b, c))
+	return N, E
+
+def uda_model(Sg, subgrafos):
+	# catalogo de subgrafos
+	cat_subgrafos = {
+		"G_0": [1],
+		"G_triangulo": [2],
+		"G_cuadrado": [2],
+		"G_diagonal": [2, 3],
+		"G_equis": [3],
+		"G_pentagono": [1],
+		"G_hexagono": [1]
+	}
+	N, E = [], []
+	# conjunto de grados del grafo
+	l_k = set([])
+	for i in Sg:
+		l_k.add(i)
+	# conjunto de grados de los subgrafos
+	H = set([])
+	for s in subgrafos:
+		for i in cat_subgrafos[s]:
+			H.add(i)
+	string_H = ""
+	for n in H:
+		string_H = string_H + " " + str(n)
+	# espacio de soluciones
+	sol_esp = []
+	# soluciones
+	for k in l_k:
+		subprocess.call("./solver.exe " + str(k) + string_H)
+		sol_k = []
+		c_max = len(H) - 1
+		with open('soluciones.txt', 'r') as f:
+			f.readline()
+			cont = 0
+			solution = []
+			line = f.readline()
+			while line != "":
+				solution.append(int(line))
+				if cont == c_max:
+					sol_k.append(solution[:])
+					cont = 0
+					solution = []
+				else:
+					cont = cont + 1
+				line = f.readline()
+		sol_esp.append([k, sol_k])
+	print(sol_esp)
+	# linea 21
 	return N, E
 
 def mostrar_datos(G):
