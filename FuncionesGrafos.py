@@ -2,6 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import math as m
 import random as r
+from datetime import datetime
 
 def havel_hakimi(secuencia):
 	# sacar copia de la secuencia de grados
@@ -79,10 +80,23 @@ def edgetriangle_model(Ss, St):
 def mostrar_datos(G):
 	print("Cantidad de nodos:", nx.number_of_nodes(G))
 	print("Cantidad de enlaces:", nx.number_of_edges(G))
-	print("Coef. agrupamiento global - Transitividad:", nx.transitivity(G))
+	print("Coef. Transitividad:", round(nx.transitivity(G), 4))
 	print("Coef. agrupamiento promedio:", round(nx.average_clustering(G), 4))
 	nTriangles = 0
 	for valor in nx.triangles(G).values():
 		nTriangles = nTriangles + valor
 	nTriangles = int(nTriangles / 3)
 	print("Cantidad de triangulos:", nTriangles)
+
+def imprimir_gephi(G):
+	fecha = datetime.now().strftime('%Y%m%d-%H%M%S')
+	nodos = open(fecha + '_n.csv', 'w')
+	nodos.write("ID,Label")
+	for i in G.nodes():
+		nodos.write("\n" + str(i) + "," + str(i))
+	nodos.close()
+	enlaces = open(fecha + '_e.csv', 'w')
+	enlaces.write("Source,Target,Weight,Label,Type")
+	for j in G.edges():
+		enlaces.write("\n" + str(j[0]) + "," + str(j[1]) + ",1,,Undirected")
+	enlaces.close()
