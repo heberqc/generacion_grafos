@@ -86,8 +86,8 @@ def uda_model(Sg, subgrafos):
 		"G_cuadrado": [2],
 		"G_diagonal": [2, 3],
 		"G_equis": [3],
-		"G_pentagono": [1],
-		"G_hexagono": [1]
+		"G_pentagono": [2],
+		"G_hexagono": [2]
 	}
 	N, E = [], []
 	# conjunto de grados del grafo
@@ -103,10 +103,10 @@ def uda_model(Sg, subgrafos):
 	for n in H:
 		string_H = string_H + " " + str(n)
 	# espacio de soluciones
-	sol_esp = []
+	sol_esp = {}
 	# soluciones
 	for k in l_k:
-		subprocess.call("./solver.exe " + str(k) + string_H)
+		subprocess.call("./diofantica.exe " + str(k) + string_H)
 		sol_k = []
 		c_max = len(H) - 1
 		with open('soluciones.txt', 'r') as f:
@@ -123,9 +123,22 @@ def uda_model(Sg, subgrafos):
 				else:
 					cont = cont + 1
 				line = f.readline()
-		sol_esp.append([k, sol_k])
+		sol_esp[k] = sol_k
 	print(sol_esp)
-	# linea 21
+	# vector de cantidad de hyperstubs en cada nodo
+	H_N = []
+	for i in range(len(H)):
+		H_N.append([])
+	# solucion random para cada nodo
+	for nodo in range(len(Sg)):
+		N.append(nodo + 1)
+	for grado in Sg:
+		n_casos = len(sol_esp[grado])
+		sol = sol_esp[grado][m.floor(r.random() * n_casos)]
+		for	h in range(len(H)):
+			H_N[h].append(sol[h])
+	print(H_N)
+
 	return N, E
 
 def mostrar_datos(G):
