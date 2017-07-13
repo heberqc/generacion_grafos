@@ -4,9 +4,7 @@ Edge-Triangle Model Quickstart
 import networkx as nx
 import matplotlib.pyplot as plt
 
-from FuncionesGrafos import havel_hakimi
-from FuncionesGrafos import edgetriangle_model
-from FuncionesGrafos import mostrar_datos
+from FuncionesGrafos import *
 
 # Enlaces
 # E1 = [(13, 31), (1, 15), (15, 25), (20, 18), (14, 7), (13, 4), (8, 20)
