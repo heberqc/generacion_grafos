@@ -44,7 +44,7 @@ def mostrar_networkx(N, E):
 def configuration_model(Sg):
 	N, E, Stubs = [], [], []
 	for i in range(len(Sg)):
-		N.append(i + 1)
+		N.append(i)
 		for j in range(Sg[i]):
 			Stubs.append(N[i])
 	while len(Stubs) > 0:
@@ -78,29 +78,33 @@ def edgetriangle_model(Ss, St):
 		E.append((b, c))
 	return N, E
 
+# catalogo de subgrafos
+cat_subgrafos = {
+	"G_0": [[1, 1], [(0, 1)]]
+	, "G_triangulo": [[2, 2, 2], [(0, 1), (1, 2), (2, 0)]]
+	, "G_cuadrado": [[2, 2, 2, 2], [(0, 1), (1, 2), (2, 3), (3, 0)]]
+	, "G_diagonal": [[2, 3, 2, 3], [(0, 1), (1, 2), (1, 3), (2, 3), (3, 0)]]
+	, "G_equis": [[3, 3, 3, 3], [
+		(0, 1), (1, 2), (1, 3), (2, 3), (3, 0), (3, 1)]]
+	, "G_pentagono": [[2, 2, 2, 2, 2], [
+		(0, 1), (1, 2), (2, 3), (3, 4), (4, 0)]]
+	, "G_hexagono": [[2, 2, 2, 2, 2, 2], [
+		(0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 0)]]
+}
+
 def uda_model(Sg, subgrafos):
-	# catalogo de subgrafos
-	cat_subgrafos = {
-		"G_0": [1],
-		"G_triangulo": [2],
-		"G_cuadrado": [2],
-		"G_diagonal": [2, 3],
-		"G_equis": [3],
-		"G_pentagono": [2],
-		"G_hexagono": [2]
-	}
 	N, E = [], []
 	# conjunto de grados del grafo
 	l_k = set([])
 	for i in Sg:
 		l_k.add(i)
-	# conjunto de grados de los subgrafos
-	H = set([])
+	# conjunto de grados de los subgrafos (hyperstub)
+	c_h = set([])
 	for s in subgrafos:
-		for i in cat_subgrafos[s]:
-			H.add(i)
+		for i in set(cat_subgrafos[s][0]):
+			c_h.add(i)
 	string_H = ""
-	for n in H:
+	for n in c_h:
 		string_H = string_H + " " + str(n)
 	# espacio de soluciones
 	sol_esp = {}
@@ -108,7 +112,7 @@ def uda_model(Sg, subgrafos):
 	for k in l_k:
 		subprocess.call("./diofantica.exe " + str(k) + string_H)
 		sol_k = []
-		c_max = len(H) - 1
+		c_max = len(c_h) - 1
 		with open('soluciones.txt', 'r') as f:
 			f.readline()
 			cont = 0
@@ -124,21 +128,32 @@ def uda_model(Sg, subgrafos):
 					cont = cont + 1
 				line = f.readline()
 		sol_esp[k] = sol_k
-	print(sol_esp)
+	print("sol_esp:", sol_esp)
 	# vector de cantidad de hyperstubs en cada nodo
 	H_N = []
-	for i in range(len(H)):
+	for i in range(len(c_h)):
 		H_N.append([])
-	# solucion random para cada nodo
+	# creacion de los nodos
 	for nodo in range(len(Sg)):
-		N.append(nodo + 1)
+		N.append(nodo)
+	# solucion random para cada nodo
 	for grado in Sg:
 		n_casos = len(sol_esp[grado])
 		sol = sol_esp[grado][m.floor(r.random() * n_casos)]
-		for	h in range(len(H)):
+		for	h in range(len(c_h)):
 			H_N[h].append(sol[h])
-	print(H_N)
-
+	print("H_N:", H_N)
+	# generación de los stubs
+	H = []
+	for h_i in range(len(H_N)):
+		H.append([])
+	# creacion de todos los stubs
+	for h_i in H_N:
+		for n in range(len(N)):
+			for h in range(h_i[n]):
+				H[H_N.index(h_i)].append(n)
+	print("H:", H)
+	# prueba
 	return N, E
 
 def mostrar_datos(G):
@@ -152,15 +167,15 @@ def mostrar_datos(G):
 	nTriangles = int(nTriangles / 3)
 	print("Cantidad de triangulos:", nTriangles)
 
-def imprimir_gephi(G):
+def imprimir_gephi(N, E):
 	fecha = datetime.now().strftime('%Y%m%d-%H%M%S')
 	nodos = open(fecha + '_n.csv', 'w')
 	nodos.write("ID,Label")
-	for i in G.nodes():
+	for i in N:
 		nodos.write("\n" + str(i) + "," + str(i))
 	nodos.close()
 	enlaces = open(fecha + '_e.csv', 'w')
 	enlaces.write("Source,Target,Weight,Label,Type")
-	for j in G.edges():
+	for j in E:
 		enlaces.write("\n" + str(j[0]) + "," + str(j[1]) + ",1,,Undirected")
 	enlaces.close()
