@@ -103,6 +103,7 @@ def uda_model(Sg, subgrafos):
 	for s in subgrafos:
 		for i in set(cat_subgrafos[s][0]):
 			c_h.add(i)
+	c_h = list(c_h)
 	string_H = ""
 	for n in c_h:
 		string_H = string_H + " " + str(n)
@@ -140,7 +141,7 @@ def uda_model(Sg, subgrafos):
 	for grado in Sg:
 		n_casos = len(sol_esp[grado])
 		sol = sol_esp[grado][m.floor(r.random() * n_casos)]
-		for	h in range(len(c_h)):
+		for h in range(len(c_h)):
 			H_N[h].append(sol[h])
 	print("H_N:", H_N)
 	# generación de los stubs
@@ -153,6 +154,22 @@ def uda_model(Sg, subgrafos):
 			for h in range(h_i[n]):
 				H[H_N.index(h_i)].append(n)
 	print("H:", H)
+	# prueba
+	# unir cada subgrafo siguiendo la configuracion del catalogo de grafos
+	for subgrafo in subgrafos:
+		# suma de hyperstubs
+		suma = [0] * len(c_h)
+		# cantidad de hyperstubs necesarios para el subgrafo
+		h = [0] * len(c_h)
+		print("-------------------")
+		print(cat_subgrafos[subgrafo][0])
+		for i in range(len(c_h)):
+			suma[i] = sum(H[i])
+			h[i] = cat_subgrafos[subgrafo][0].count(c_h[i])
+		print("suma:", suma)
+		print("h:", h)
+		# construir subgrafos
+		# cat_subgrafos[subgrafo]
 	# prueba
 	return N, E
 
