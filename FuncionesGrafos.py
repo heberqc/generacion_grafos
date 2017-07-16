@@ -127,7 +127,7 @@ def uda_model(Sg, subgrafos):
 					cont = cont + 1
 				line = f.readline()
 		sol_esp[k] = sol_k
-	print("sol_esp:", sol_esp)
+	# print("sol_esp:", sol_esp)
 	# vector de cantidad de hyperstubs en cada nodo
 	H_N = []
 	for i in range(len(c_h)):
@@ -141,7 +141,7 @@ def uda_model(Sg, subgrafos):
 		sol = sol_esp[grado][m.floor(r.random() * n_casos)]
 		for h in range(len(c_h)):
 			H_N[h].append(sol[h])
-	print("H_N:", H_N)
+	# print("H_N:", H_N)
 	# generación de los stubs
 	H = []
 	for h_i in range(len(H_N)):
@@ -151,7 +151,7 @@ def uda_model(Sg, subgrafos):
 		for n in range(len(N)):
 			for h in range(h_i[n]):
 				H[H_N.index(h_i)].append(n)
-	print("H:", H)
+	# print("H:", H)
 	# prueba
 	# unir cada subgrafo siguiendo la configuracion del catalogo de grafos
 	for subgrafo in subgrafos:
@@ -159,13 +159,13 @@ def uda_model(Sg, subgrafos):
 		suma = [0] * len(c_h)
 		# cantidad de hyperstubs necesarios para el subgrafo
 		h = [0] * len(c_h)
-		print("-------------------")
-		print(cat_subgrafos[subgrafo][0])
+		# print("-------------------")
+		# print(cat_subgrafos[subgrafo][0])
 		for i in range(len(c_h)):
 			suma[i] = len(H[i])
 			h[i] = cat_subgrafos[subgrafo][0].count(c_h[i])
-		print("suma:", suma)
-		print("h:", h)
+		# print("suma:", suma)
+		# print("h:", h)
 		# cantidad de subgrafos posibles
 		divisiones = [0] * len(c_h)
 		for i in range(len(c_h)):
@@ -173,9 +173,9 @@ def uda_model(Sg, subgrafos):
 				divisiones[i] = m.floor(suma[i] / h[i])
 			else:
 				divisiones[i] = sum(suma)
-		print(divisiones)
+		# print(divisiones)
 		max = min(divisiones)
-		print("max:", max)
+		print("cant. " + subgrafo + ":", max)
 		# construir el max num de subgrafos
 		for i in range(max):
 			N_sg = [0] * len(cat_subgrafos[subgrafo][0])
@@ -183,7 +183,7 @@ def uda_model(Sg, subgrafos):
 			for j in range(len(cat_subgrafos[subgrafo][0])):
 				# emparejar grados
 				N_sg[j] = pop_random(H[c_h.index(cat_subgrafos[subgrafo][0][j])])
-			print("N_sg:", N_sg)
+			# print("N_sg:", N_sg)
 			# unir
 			for k in range(len(cat_subgrafos[subgrafo][1])):
 				E.append(
