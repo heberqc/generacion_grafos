@@ -41,6 +41,9 @@ def mostrar_networkx(N, E):
 	nTriangles = int(nTriangles / 3)
 	print("Cantidad de triangulos:", nTriangles)
 
+def pop_random(lista):
+	return lista.pop(int(m.floor(r.random() * len(lista))))
+
 def configuration_model(Sg):
 	N, E, Stubs = [], [], []
 	for i in range(len(Sg)):
@@ -164,13 +167,35 @@ def uda_model(Sg, subgrafos):
 		print("-------------------")
 		print(cat_subgrafos[subgrafo][0])
 		for i in range(len(c_h)):
-			suma[i] = sum(H[i])
+			suma[i] = len(H[i])
 			h[i] = cat_subgrafos[subgrafo][0].count(c_h[i])
 		print("suma:", suma)
 		print("h:", h)
-		# construir subgrafos
-		# cat_subgrafos[subgrafo]
-	# prueba
+		# cantidad de subgrafos posibles
+		divisiones = [0] * len(c_h)
+		for i in range(len(c_h)):
+			if h[i] > 0:
+				divisiones[i] = m.floor(suma[i] / h[i])
+			else:
+				divisiones[i] = sum(suma)
+		print(divisiones)
+		max = min(divisiones)
+		print("max:", max)
+		# construir el max num de subgrafos
+		for i in range(max):
+			N_sg = [0] * len(cat_subgrafos[subgrafo][0])
+			# seleccionar los nodos
+			for j in range(len(cat_subgrafos[subgrafo][0])):
+				# emparejar grados
+				N_sg[j] = pop_random(H[c_h.index(cat_subgrafos[subgrafo][0][j])])
+			print("N_sg:", N_sg)
+			# unir
+			for k in range(len(cat_subgrafos[subgrafo][1])):
+				E.append(
+					(N_sg[cat_subgrafos[subgrafo][1][k][0]]
+					, N_sg[cat_subgrafos[subgrafo][1][k][1]])
+				)
+		# convertir los hyperstubs que sobraron
 	return N, E
 
 def mostrar_datos(G):
