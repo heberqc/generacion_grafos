@@ -25,21 +25,16 @@ def havel_hakimi(secuencia):
 		DS[i] = DS[i] - 1
 	return havel_hakimi(DS)
 
-def mostrar_networkx(N, E):
+def n_networkx(N, E):
 	G = nx.Graph()
 	G.add_nodes_from(N)
 	G.add_edges_from(E)
+	return G
+
+def show_networkx(G):
 	nx.draw_networkx(G)
 	# nx.draw_circular(G)
 	plt.show()
-	# print("Clustering:", nx.clustering(G))
-	print("Coef. agrupamiento promedio:", round(nx.average_clustering(G), 4))
-	# print("Triangles:", nx.triangles(G))
-	nTriangles = 0
-	for valor in nx.triangles(G).values():
-		nTriangles = nTriangles + valor
-	nTriangles = int(nTriangles / 3)
-	print("Cantidad de triangulos:", nTriangles)
 
 def pop_random(lista):
 	return lista.pop(int(m.floor(r.random() * len(lista))))
