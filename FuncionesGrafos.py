@@ -216,3 +216,28 @@ def imprimir_gephi(N, E):
 	for j in E:
 		enlaces.write("\n" + str(j[0]) + "," + str(j[1]) + ",1,,Undirected")
 	enlaces.close()
+
+def extrae_secuencia_grados(NF, EF):
+	N = []
+	with open(NF, 'r') as f:
+		# encabezados
+		f.readline()
+		line = f.readline()
+		while line != "":
+			campos = line.split(',')
+			N.append(int(campos[0]))
+			line = f.readline()
+	# inicializar secuencia de grados
+	Sg = [0] * len(N)
+	with open(EF, 'r') as f:
+		f.readline()
+		line = f.readline()
+		while line != "":
+			campos = line.split(',')
+			# source
+			Sg[int(campos[0])]+=1
+			# target
+			Sg[int(campos[1])]+=1
+			line = f.readline()
+	Sg.sort(reverse=True)
+	return Sg
