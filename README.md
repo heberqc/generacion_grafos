@@ -2,4 +2,5 @@
 
 Heber Quequejana
 
-Entorno de desarrollo usado: PyCharm Community Edition
+Miniconda (Numpy, Matplotlib, Pandas, Networkx, ...)
+Visual Studio Code

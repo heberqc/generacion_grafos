@@ -235,9 +235,9 @@ def extrae_secuencia_grados(NF, EF):
 		while line != "":
 			campos = line.split(',')
 			# source
-			Sg[int(campos[0])]+=1
+			Sg[int(campos[0])] += 1
 			# target
-			Sg[int(campos[1])]+=1
+			Sg[int(campos[1])] += 1
 			line = f.readline()
 	Sg.sort(reverse=True)
 	return Sg
