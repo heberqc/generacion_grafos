@@ -167,3 +167,4 @@ ENV/
 *.exe
 *.txt
 *.csv
+.vs/

@@ -207,14 +207,14 @@ def mostrar_datos(G):
 def imprimir_gephi(N, E):
 	fecha = datetime.now().strftime('%Y%m%d-%H%M%S')
 	nodos = open(fecha + '_n.csv', 'w')
-	nodos.write("ID,Label")
+	nodos.write("ID,Label\n")
 	for i in N:
-		nodos.write("\n" + str(i) + "," + str(i))
+		nodos.write(str(i) + "," + str(i) + "\n")
 	nodos.close()
 	enlaces = open(fecha + '_e.csv', 'w')
-	enlaces.write("Source,Target,Weight,Label,Type")
+	enlaces.write("Source,Target,Weight,Label,Type\n")
 	for j in E:
-		enlaces.write("\n" + str(j[0]) + "," + str(j[1]) + ",1,,Undirected")
+		enlaces.write(str(j[0]) + "," + str(j[1]) + ",1,,Undirected" + "\n")
 	enlaces.close()
 
 def extrae_secuencia_grados(NF, EF):
