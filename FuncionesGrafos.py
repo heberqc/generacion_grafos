@@ -190,7 +190,17 @@ def uda_model(Sg, subgrafos):
 					(N_sg[cat_subgrafos[subgrafo][1][k][0]]
 					, N_sg[cat_subgrafos[subgrafo][1][k][1]])
 				)
-		# convertir los hyperstubs que sobraron
+	# convertir los hyperstubs que sobraron
+	# pool de stubs
+	p = []
+	for h in H:
+		for s in range(len(h)):
+			p.append(h.pop(0))
+	# unir los stubs del pool
+	while len(p) > 1:
+		a = p.pop(0)
+		b = p.pop(0)
+		E.append((a, b))
 	return N, E
 
 def mostrar_datos(G):
