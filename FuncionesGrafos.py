@@ -251,3 +251,10 @@ def extrae_secuencia_grados(NF, EF):
 			line = f.readline()
 	Sg.sort(reverse=True)
 	return Sg
+
+def secuencia_grados(N, E):
+	sg = [0] * len(N)
+	for edge in E:
+		sg[edge[0]] += 1
+		sg[edge[1]] += 1
+	return sg
