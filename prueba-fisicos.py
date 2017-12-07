@@ -103,3 +103,6 @@ N, E = fg.uda_model(sg, ["G_equis", "G_0"])
 
 fg.imprimir_gephi(N, E)
 
+G2 = fg.n_networkx(N, E)
+
+fg.mostrar_datos(G2)

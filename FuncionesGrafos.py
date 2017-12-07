@@ -206,6 +206,7 @@ def uda_model(Sg, subgrafos):
 def mostrar_datos(G):
 	print("Cantidad de nodos:", nx.number_of_nodes(G))
 	print("Cantidad de enlaces:", nx.number_of_edges(G))
+	print("Densidad", densidad(G.nodes(), G.edges()))
 	print("Coef. Transitividad:", round(nx.transitivity(G), 4))
 	print("Coef. agrupamiento promedio:", round(nx.average_clustering(G), 4))
 	nTriangles = 0
@@ -258,3 +259,6 @@ def secuencia_grados(N, E):
 		sg[edge[0]] += 1
 		sg[edge[1]] += 1
 	return sg
+
+def densidad(N, E):
+	return 2 * len(E) / len(N) / (len(N) - 1)
