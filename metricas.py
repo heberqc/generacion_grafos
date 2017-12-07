@@ -10,6 +10,7 @@ https://networkx.github.io/documentation/stable/reference/algorithms/centrality.
 
 import networkx as nx
 import FuncionesGrafos as fg
+from networkx.algorithms import approximation
 
 Sg = [8] * 20
 
@@ -41,5 +42,36 @@ nx.closeness_centrality(G, u=None, distance=None, wf_improved=True,
 nx.current_flow_closeness_centrality(G, weight=None, dtype='float', 
 	solver='lu')
 
+#(Shortest Path) Betweenness
+nx.betweenness_centrality(G)
+nx.edge_betweenness_centrality(G)
+nx.betweenness_centrality_subset(G)
+nx.edge_betweenness_centrality_subset(G)
+
+#Current Flow Betweenness
+nx.current_flow_betweenness_centrality(G)
+nx.edge_current_flow_betweenness_centrality(G)
+nx.approximate_current_flow_betweenness_centrality(G)
+nx.current_flow_betweenness_centrality_subset(G)
+nx.edge_current_flow_betweenness_centrality_subset(G)
+
+#Communicability Betweenness
+nx.communicability_betweenness_centrality(G)
+
+#Load
+nx.load_centrality(G)
+nx.edge_load_centrality(G)
+
+#Subgraph
+nx.subgraph_centrality(G) #Return subgraph centrality for each node in G.
+nx.subgraph_centrality_exp(G) #Return the subgraph centrality for each node of G.
+nx.estrada_index(G) #Return the Estrada index of a the graph G.
+
+#Harmonic Centrality
+nx.harmonic_centrality(G) #Compute harmonic centrality for nodes.
+
+# =============================================================================
+# Approximation
+# =============================================================================
 
 
